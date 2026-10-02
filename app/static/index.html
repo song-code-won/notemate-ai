@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoteMate AI — Your Thoughts, Organized by AI</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h2>NoteMate AI</h2>
+          <span>Your thoughts, under your control</span>
+        </div>
+      </div>
+
+      <div class="sidebar-actions">
+        <button id="btnNewNote" class="btn btn-primary btn-block">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          New Note
+        </button>
+      </div>
+
+      <nav class="nav-menu">
+        <button id="navAllNotes" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>All Notes</span>
+          <span id="notesCountBadge" class="badge">0</span>
+        </button>
+
+        <button id="navAudioUpload" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+          <span>Voice-to-Notes</span>
+        </button>
+
+        <button id="navPdfUpload" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <path d="M9 15h6"></path>
+          </svg>
+          <span>PDF-to-Notes</span>
+        </button>
+
+        <button id="navSettings" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>AI & Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-tags-section">
+        <h4>Tags</h4>
+        <div id="sidebarTagList" class="tag-cloud">
+          <!-- Dynamic tags -->
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div id="aiStatusBadge" class="status-indicator-box">
+          <span class="status-dot checking"></span>
+          <div class="status-details">
+            <strong id="aiStatusTitle">Checking AI...</strong>
+            <small id="aiStatusSubtitle">Connecting to Ollama</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+      <!-- TOP NAVIGATION BAR -->
+      <header class="top-bar">
+        <div class="search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search notes by title, content, or tags...">
+          <button id="clearSearchBtn" class="btn-icon hidden">&times;</button>
+        </div>
+
+        <div class="top-bar-meta">
+          <span class="hacktoberfest-badge">🏆 Hacktoberfest 2026: Build for a Friend</span>
+        </div>
+      </header>
+
+      <!-- VIEW: NOTES DASHBOARD -->
+      <section id="viewDashboard" class="view-panel active">
+        <div class="dashboard-header">
+          <div>
+            <h1 class="view-title">My Notes</h1>
+            <p class="view-subtitle">Capture thoughts, lectures, and ideas — organized locally with open AI.</p>
+          </div>
+          <div class="dashboard-controls">
+            <button id="btnRefreshNotes" class="btn btn-secondary btn-sm" title="Refresh">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter banner (shown when tag or query is active) -->
+        <div id="filterBanner" class="filter-banner hidden">
+          <span>Filtering notes by: <strong id="filterText"></strong></span>
+          <button id="resetFilterBtn" class="btn-link">Clear filter</button>
+        </div>
+
+        <!-- Empty State -->
+        <div id="notesEmptyState" class="empty-state hidden">
+          <div class="empty-icon">📝</div>
+          <h3>No notes found</h3>
+          <p>Create your first note, record audio, or upload a PDF to get started with NoteMate AI.</p>
+          <button id="btnEmptyNewNote" class="btn btn-primary">Create Note</button>
+        </div>
+
+        <!-- Notes Grid -->
+        <div id="notesGrid" class="notes-grid">
+          <!-- Dynamically populated note cards -->
+        </div>
+      </section>
+
+      <!-- VIEW: NOTE EDITOR & AI ASSISTANT (SPLIT VIEW) -->
+      <section id="viewEditor" class="view-panel">
+        <div class="editor-header">
+          <div class="editor-header-left">
+            <button id="btnBackToDashboard" class="btn btn-secondary btn-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              All Notes
+            </button>
+            <span id="saveStatusIndicator" class="save-indicator">Draft</span>
+          </div>
+
+          <div class="editor-actions">
+            <button id="btnSaveNote" class="btn btn-primary btn-sm">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              Save
+            </button>
+            <button id="btnDeleteNote" class="btn btn-danger btn-sm" title="Delete Note">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-workspace">
+          <!-- LEFT: Note Content Editor -->
+          <div class="editor-pane">
+            <input type="text" id="noteTitleInput" class="editor-title-input" placeholder="Note Title...">
+            
+            <div class="tags-input-container">
+              <span class="tag-icon">🏷️</span>
+              <input type="text" id="noteTagsInput" class="editor-tags-input" placeholder="Tags (comma separated, e.g. lecture, docker, exam)...">
+            </div>
+
+            <textarea id="noteContentInput" class="editor-content-textarea" placeholder="Start typing your thoughts, lecture notes, or paste material here..."></textarea>
+          </div>
+
+          <!-- RIGHT: AI Assistant Panel -->
+          <div class="ai-assistant-pane">
+            <div class="ai-panel-tabs">
+              <button id="tabBtnSummary" class="ai-tab-btn active">
+                ✨ Summarize
+              </button>
+              <button id="tabBtnAsk" class="ai-tab-btn">
+                💬 Ask AI
+              </button>
+              <button id="tabBtnQuiz" class="ai-tab-btn">
+                🧠 Generate Quiz
+              </button>
+            </div>
+
+            <div class="ai-panel-body">
+              <!-- TAB 1: SUMMARIZE -->
+              <div id="tabContentSummary" class="ai-tab-content active">
+                <div class="ai-tab-header">
+                  <div>
+                    <h4>AI Note Summary</h4>
+                    <p>Concise summary, key points, concepts, and action items via Gemma 3.</p>
+                  </div>
+                  <button id="btnTriggerSummarize" class="btn btn-accent btn-sm">
+                    ✨ Summarize with AI
+                  </button>
+                </div>
+
+                <div id="summaryLoadingSpinner" class="loading-state hidden">
+                  <div class="spinner"></div>
+                  <span>Gemma 3 is analyzing your note...</span>
+                </div>
+
+                <div id="summaryResultsContainer" class="summary-results-box">
+                  <div class="ai-placeholder">
+                    Click <strong>"Summarize with AI"</strong> to extract key takeaways, core concepts, and action items.
+                  </div>
+                </div>
+
+                <div id="summaryActionsBar" class="summary-actions-bar hidden">
+                  <button id="btnCopySummary" class="btn btn-secondary btn-sm">📋 Copy Summary</button>
+                  <button id="btnInsertSummary" class="btn btn-secondary btn-sm">📥 Append to Note</button>
+                </div>
+              </div>
+
+              <!-- TAB 2: ASK AI -->
+              <div id="tabContentAsk" class="ai-tab-content">
+                <div class="ai-tab-header">
+                  <div>
+                    <h4>Ask AI About This Note</h4>
+                    <p>Strictly answers based on this note. Won't make up facts.</p>
+                  </div>
+                </div>
+
+                <div class="suggested-chips">
+                  <span class="chip" data-q="What is the main topic of this note?">What is the main topic?</span>
+                  <span class="chip" data-q="What are the key takeaways?">Key takeaways?</span>
+                  <span class="chip" data-q="Are there any action items mentioned?">Any action items?</span>
+                </div>
+
+                <div id="qaHistory" class="qa-chat-box">
+                  <div class="qa-message bot">
+                    <div class="qa-bubble">
+                      Hello! Ask me any question specifically about this note. If the answer isn't in your text, I will explicitly let you know.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="qa-input-box">
+                  <input type="text" id="qaQuestionInput" placeholder="Ask a question about this note...">
+                  <button id="btnSendQuestion" class="btn btn-accent btn-sm">Ask</button>
+                </div>
+              </div>
+
+              <!-- TAB 3: QUIZ -->
+              <div id="tabContentQuiz" class="ai-tab-content">
+                <div class="ai-tab-header">
+                  <div>
+                    <h4>Revision Quiz</h4>
+                    <p>5 multiple-choice questions generated from your note for revision.</p>
+                  </div>
+                  <button id="btnTriggerQuiz" class="btn btn-accent btn-sm">
+                    🧠 Generate Quiz
+                  </button>
+                </div>
+
+                <div id="quizLoadingSpinner" class="loading-state hidden">
+                  <div class="spinner"></div>
+                  <span>Generating revision questions with Gemma 3...</span>
+                </div>
+
+                <div id="quizContainer" class="quiz-container">
+                  <div class="ai-placeholder">
+                    Click <strong>"Generate Quiz"</strong> to create a 5-question test based on this note.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: AUDIO TO NOTES MODAL/VIEW -->
+      <section id="viewAudio" class="view-panel">
+        <div class="modal-card">
+          <div class="modal-card-header">
+            <div>
+              <h2>🎙️ Voice-to-Notes</h2>
+              <p>Upload a voice recording or lecture audio. Transcribed locally with faster-whisper, then formatted into structured notes with Gemma 3.</p>
+            </div>
+            <button id="btnCloseAudioView" class="btn-icon">&times;</button>
+          </div>
+
+          <div class="upload-dropzone" id="audioDropzone">
+            <input type="file" id="audioFileInput" accept=".wav,.mp3,.m4a,.ogg,.flac,.webm" class="file-input-hidden">
+            <div class="dropzone-content">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
+              <h4>Drag & drop an audio file, or <span class="highlight">browse</span></h4>
+              <p>Supports MP3, WAV, M4A, OGG, WEBM. Processed 100% locally on your machine.</p>
+              <div id="selectedAudioFilename" class="selected-file-label"></div>
+            </div>
+          </div>
+
+          <div class="upload-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkAutoStructureAudio" checked>
+              <span>Auto-structure transcript with Gemma 3 (add headings, summary, key points)</span>
+            </label>
+            <button id="btnProcessAudio" class="btn btn-primary" disabled>
+              Transcribe & Process Audio
+            </button>
+          </div>
+
+          <div id="audioProcessingSpinner" class="loading-state hidden">
+            <div class="spinner"></div>
+            <span id="audioProcessingStatusText">Transcribing speech with faster-whisper...</span>
+          </div>
+
+          <!-- Results -->
+          <div id="audioResultArea" class="audio-result-area hidden">
+            <div class="split-result">
+              <div class="result-col">
+                <h4>Original Raw Transcript</h4>
+                <textarea id="audioRawTranscriptText" class="result-textarea" readonly></textarea>
+              </div>
+              <div class="result-col">
+                <h4>AI-Structured Notes</h4>
+                <textarea id="audioStructuredNotesText" class="result-textarea"></textarea>
+              </div>
+            </div>
+
+            <div class="audio-save-bar">
+              <input type="text" id="audioNoteTitleInput" class="form-input" placeholder="Note Title...">
+              <button id="btnSaveAudioAsNote" class="btn btn-accent">Save as New Note</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: PDF TO NOTES MODAL/VIEW -->
+      <section id="viewPdf" class="view-panel">
+        <div class="modal-card">
+          <div class="modal-card-header">
+            <div>
+              <h2>📄 PDF-to-Notes</h2>
+              <p>Upload a document, study guide, or lecture slides PDF. Text is extracted with PyMuPDF and organized into structured notes with Gemma 3.</p>
+            </div>
+            <button id="btnClosePdfView" class="btn-icon">&times;</button>
+          </div>
+
+          <div class="upload-dropzone" id="pdfDropzone">
+            <input type="file" id="pdfFileInput" accept=".pdf" class="file-input-hidden">
+            <div class="dropzone-content">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <path d="M12 18v-6"></path>
+                <path d="M9 15l3 3 3-3"></path>
+              </svg>
+              <h4>Drag & drop a PDF file, or <span class="highlight">browse</span></h4>
+              <p>Supports text-based digital PDFs. Scanned PDFs will be detected and flagged.</p>
+              <div id="selectedPdfFilename" class="selected-file-label"></div>
+            </div>
+          </div>
+
+          <div class="upload-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkAutoSummarizePdf" checked>
+              <span>Auto-generate structured summary with Gemma 3</span>
+            </label>
+            <button id="btnProcessPdf" class="btn btn-primary" disabled>
+              Extract & Process PDF
+            </button>
+          </div>
+
+          <div id="pdfProcessingSpinner" class="loading-state hidden">
+            <div class="spinner"></div>
+            <span>Extracting text with PyMuPDF & analyzing with Gemma 3...</span>
+          </div>
+
+          <div id="pdfResultArea" class="pdf-result-area hidden">
+            <div id="pdfAlertBanner" class="alert-banner warning hidden"></div>
+            
+            <div class="split-result">
+              <div class="result-col">
+                <h4>Extracted PDF Text <span id="pdfMetaStats" class="badge"></span></h4>
+                <textarea id="pdfExtractedText" class="result-textarea" readonly></textarea>
+              </div>
+              <div class="result-col">
+                <h4>AI Structured Notes & Summary</h4>
+                <textarea id="pdfStructuredNotes" class="result-textarea"></textarea>
+              </div>
+            </div>
+
+            <div class="audio-save-bar">
+              <input type="text" id="pdfNoteTitleInput" class="form-input" placeholder="Note Title...">
+              <button id="btnSavePdfAsNote" class="btn btn-accent">Save as New Note</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: SETTINGS & OPEN INNOVATION -->
+      <section id="viewSettings" class="view-panel">
+        <div class="modal-card">
+          <div class="modal-card-header">
+            <div>
+              <h2>⚙️ AI & System Settings</h2>
+              <p>Configure local open-weight model integration, verify Ollama connection, and review privacy guarantees.</p>
+            </div>
+            <button id="btnCloseSettingsView" class="btn-icon">&times;</button>
+          </div>
+
+          <div class="settings-grid">
+            <div class="settings-card">
+              <h3>Local Model Configuration</h3>
+              <p class="text-muted">NoteMate AI connects to Ollama running on your machine for zero-cost, private inference.</p>
+
+              <div class="form-group">
+                <label for="settingsOllamaUrl">Ollama Base URL</label>
+                <input type="text" id="settingsOllamaUrl" class="form-input" value="http://localhost:11434">
+                <small>Default local port is 11434.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="settingsOllamaModel">Model Tag</label>
+                <input type="text" id="settingsOllamaModel" class="form-input" value="gemma3:1b">
+                <small>Recommended: <code>gemma3:1b</code> or <code>gemma3:4b</code> for fast consumer laptop inference.</small>
+              </div>
+
+              <div class="settings-actions">
+                <button id="btnTestOllama" class="btn btn-secondary">Test Connection</button>
+                <button id="btnSaveSettings" class="btn btn-primary">Save Settings</button>
+              </div>
+
+              <div id="settingsConnectionResult" class="connection-status-box hidden"></div>
+            </div>
+
+            <div class="settings-card">
+              <h3>🌱 Why Open Innovation Matters</h3>
+              <ul class="principles-list">
+                <li>
+                  <strong>🔒 100% Privacy & Data Ownership:</strong>
+                  Your personal notes, thoughts, and audio recordings never leave your machine. No cloud telemetry or third-party training.
+                </li>
+                <li>
+                  <strong>💸 Zero Subscription Cost:</strong>
+                  Runs completely free without paid API tokens (OpenAI, Claude, etc.).
+                </li>
+                <li>
+                  <strong>🔄 Model Flexibility:</strong>
+                  Easily switch models (Gemma 3, Llama 3, Mistral, Qwen) by changing the model tag.
+                </li>
+                <li>
+                  <strong>🔍 Full Transparency:</strong>
+                  All code, prompts, and database schemas are open-source and auditable.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="troubleshooting-card">
+            <h3>Quick Setup Guide for Ollama</h3>
+            <ol>
+              <li>Download Ollama from <a href="https://ollama.com" target="_blank">ollama.com</a>.</li>
+              <li>Open your terminal and pull Gemma 3: <code>ollama pull gemma3:1b</code></li>
+              <li>Ollama runs in the background at <code>http://localhost:11434</code> automatically.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
